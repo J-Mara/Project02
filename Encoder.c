@@ -11,9 +11,12 @@ int main(){
     printf("there has been an error: %s\n", strerror(errno));
     return -1;
   }else{
-    char res[500];
+    struct stat s;
+    stat("testfile.txt", &s);
+    int len = s.st_size;
+    char res[len];
     char *p = &res[0];
-    read(opfile, p, 500);
+    read(opfile, p, len);
     printf("contents of the file:\n%s\n", res);
   }
 }
