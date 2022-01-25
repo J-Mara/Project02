@@ -5,6 +5,7 @@
 #include <errno.h>
 #include <sys/stat.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 char *getCont(char* filename, char* m){
   int opfile = open(filename, O_RDONLY, 0);
@@ -35,6 +36,21 @@ char *shiftUp(char* text, int shift){
   return text;
 }
 
+char *shiftUpRead(char* text){
+  int i;
+  int j = 0;
+  for(i = 0; text[i] != '\0'; i++){
+    if(isdigit(text[i])){
+      j = (int)(text[i])-48;
+      printf("shift value: %d\n", j);
+    }
+    if(isalpha(text[i])){
+	text[i] += j;
+    }
+  }
+  return text;
+}
+
 int main(){
   struct stat s;
   stat("testfile.txt", &s);
@@ -42,5 +58,5 @@ int main(){
   t = malloc(s.st_size);
   char * text = getCont("testfile.txt", t);
   printf("here is the contents:\n%s\n", text);
-  printf("Shift attempt:\n%s\n", shiftUp(text, 1));
+  printf("Shift attempt:\n%s\n", shiftUpRead(text));
 }
