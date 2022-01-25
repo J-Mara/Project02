@@ -25,10 +25,22 @@ char *getCont(char* filename, char* m){
   }
 }
 
+char *shiftUp(char* text, int shift){
+  int i;
+  for(i = 0; text[i] != '\0'; i++){
+    if(text[i] != ' ' && text[i] != '\n'){
+      text[i] += shift;
+    }
+  }
+  return text;
+}
+
 int main(){
   struct stat s;
   stat("testfile.txt", &s);
   char *t;
   t = malloc(s.st_size);
-  printf("here is the contents:\n%s\n", getCont("testfile.txt", t));
+  char * text = getCont("testfile.txt", t);
+  printf("here is the contents:\n%s\n", text);
+  printf("Shift attempt:\n%s\n", shiftUp(text, 1));
 }
