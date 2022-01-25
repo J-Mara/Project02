@@ -7,23 +7,31 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <dirent.h>
+#include "Encoder.h"
 
 int main(){
+  char* DirName = "testDirIn";
   DIR * d;
-  d = opendir("testDirIn");
+  d = opendir(DirName);
   int result = 0;
   struct dirent *entry;
   entry = readdir( d );
   struct stat s;
   printf("Regular files: \n");
-  d = opendir( "testDirIn" );
-  entry = readdir( d );
   if(d){
     while ((entry = readdir(d)) != NULL){
       if(entry->d_type == DT_REG){
         stat(entry->d_name, &s);
 	result += s.st_size;
-	printf("%s\n", entry->d_name);	
+	printf("%s\n", entry->d_name);
+	char *t;
+	t = malloc(sizeof(DirName) + sizeof('/') + sizeof(entry->d_name));
+	//char *path[sizeof(DirName) + sizeof('/') + sizeof(entry->d_name)];
+	strcpy(t, DirName);
+	strcat(t, "/");
+	strcat(t, entry->d_name);
+	printf("here is the path: %s\n", t);
+	free(t);
       }
     }
   }

@@ -53,10 +53,11 @@ char *shiftUpRead(char* text){
 
 int main(){
   struct stat s;
-  stat("testfile.txt", &s);
+  stat("testDirIn/test1.txt", &s);
   char *t;
   t = malloc(s.st_size);
-  char * text = getCont("testfile.txt", t);
+  char * text = getCont("testDirIn/test1.txt", t);
   printf("here is the contents:\n%s\n", text);
   printf("Shift attempt:\n%s\n", shiftUpRead(text));
+  free(t);
 }
