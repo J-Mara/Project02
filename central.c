@@ -10,6 +10,7 @@
 #include "Encoder.h"
 
 int main(){
+  char* DirOutName = "testDirOut";
   char* DirName = "testDirIn";
   DIR * d;
   d = opendir(DirName);
@@ -38,6 +39,14 @@ int main(){
 	char *text = getCont(t,m);
 	printf("here is the contents:\n%s\n", text);
 	printf("Shift attempt:\n%s\n", shiftUpRead(text));
+	char *t2 = malloc(sizeof(DirOutName) + sizeof('/') + sizeof(entry->d_name));
+	strcpy(t2, DirOutName);
+	strcat(t2, "/");
+	strcat(t2, entry->d_name);
+	FILE *fp;
+	fp = fopen(t2, "w");
+	//fp = opfile;
+	fputs(shiftUpRead(text), fp);
 	free(t);
       }
     }
