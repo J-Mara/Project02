@@ -1,7 +1,7 @@
 default:
-	gcc -o enc Encoder.c
-	gcc -o cent central.c
+	gcc -c Encoder.c
+	gcc -c central.c
+	gcc -o testprogram Encoder.o central.o
+
 run:
-	./cent
-encode:
-	./enc
+	./testprogram
