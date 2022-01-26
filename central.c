@@ -10,6 +10,10 @@
 #include "Encoder.h"
 
 int main(int argc, char *argv[]){
+  if (argc != 5) {
+    printf("usage: make run ARGS=\"inputDir outputDir numProcs encode_decode\"\n");
+    return -1;
+  }
   int upDown = strtol(argv[4], NULL, 0);
   char* DirOutName = argv[2];
   char* DirName = argv[1];
