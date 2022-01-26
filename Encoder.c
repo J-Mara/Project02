@@ -43,9 +43,26 @@ char *shiftUpRead(char* text){
     if(isdigit(text[i])){
       j = (int)(text[i])-48;
       //printf("shift value: %d\n", j);
-    }
-    if(isalpha(text[i])){
+    }else{
+      if(text[i] != ' ' && text[i] != '\n'){
 	text[i] += j;
+      }
+    }
+  }
+  return text;
+}
+
+char *shiftDownRead(char* text){
+  int i;
+  int j = 0;
+  for(i = 0; text[i] != '\0'; i++){
+    if(isdigit(text[i])){
+      j = (int)(text[i])-48;
+      //printf("shift value: %d\n", j);
+    }else{
+      if(text[i] != ' ' && text[i] != '\n'){
+	text[i] -= j;
+      }
     }
   }
   return text;

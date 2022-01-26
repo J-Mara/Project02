@@ -16,4 +16,6 @@ char *shiftUp(char* text, int shift);
 
 char *shiftUpRead(char* text);
 
+char *shiftDownRead(char* text);
+
 #endif

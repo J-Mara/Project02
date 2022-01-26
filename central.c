@@ -10,6 +10,7 @@
 #include "Encoder.h"
 
 int main(int argc, char *argv[]){
+  int upDown = strtol(argv[4], NULL, 0);
   char* DirOutName = argv[2];
   char* DirName = argv[1];
   printf("input: %s\n", DirName);
@@ -67,7 +68,11 @@ int main(int argc, char *argv[]){
 	strcat(t2, entry->d_name);
 	FILE *fp;
 	fp = fopen(t2, "w");
-	fputs(shiftUpRead(text), fp);
+	if(upDown == 0){
+	  fputs(shiftUpRead(text), fp);
+	}else{
+	  fputs(shiftDownRead(text), fp);
+	}
 	free(t2);
 	free(t);
       }
