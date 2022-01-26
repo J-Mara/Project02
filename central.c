@@ -12,22 +12,38 @@
 int main(){
   char* DirOutName = "testDirOut";
   char* DirName = "testDirIn";
+  int forksOrig = 3;
+  int forks = forksOrig;
+  int i = -1;
+  int ID = -1;
+  while ((ID != 0) && (forks > 1)) {
+    ID = fork();  // return 0 for child, pid for parent.
+    i++;
+    if ( (ID != 0) && (forks == 2) ) { // at last round increase i for parent.
+      i++;
+    }
+    // printf("forking %d\n", i);
+    forks--;
+  }
   DIR * d;
   d = opendir(DirName);
   int result = 0;
   struct dirent *entry;
   entry = readdir( d );
+  printf("forked %d\n", i);
   struct stat s;
-  printf("Regular files: \n");
+  //printf("Regular files: \n");
+  int counter = -1;
   if(d){
     while ((entry = readdir(d)) != NULL){
-      if(entry->d_type == DT_REG){
+      counter++;
+      printf("upping counter");
+      if(entry->d_type == DT_REG && (counter%forksOrig == i)){
         stat(entry->d_name, &s);
 	result += s.st_size;
 	printf("%s\n", entry->d_name);
 	char *t;
 	t = malloc(sizeof(DirName) + sizeof('/') + sizeof(entry->d_name));
-	//char *path[sizeof(DirName) + sizeof('/') + sizeof(entry->d_name)];
 	strcpy(t, DirName);
 	strcat(t, "/");
 	strcat(t, entry->d_name);
@@ -37,16 +53,16 @@ int main(){
 	char *m;
 	m = malloc(s.st_size);
 	char *text = getCont(t,m);
-	printf("here is the contents:\n%s\n", text);
-	printf("Shift attempt:\n%s\n", shiftUpRead(text));
+	//printf("here is the contents:\n%s\n", text);
+	//printf("Shift attempt:\n%s\n", shiftUpRead(text));
 	char *t2 = malloc(sizeof(DirOutName) + sizeof('/') + sizeof(entry->d_name));
 	strcpy(t2, DirOutName);
 	strcat(t2, "/");
 	strcat(t2, entry->d_name);
 	FILE *fp;
 	fp = fopen(t2, "w");
-	//fp = opfile;
 	fputs(shiftUpRead(text), fp);
+	free(t2);
 	free(t);
       }
     }
