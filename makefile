@@ -4,4 +4,10 @@ default:
 	gcc -o testprogram Encoder.o central.o
 
 run:
-	./testprogram
+	./testprogram $(ARGS)
+
+inputs:
+	./make_inputs.sh testDirIn 300 10
+
+clear:
+	rm -rf testDirIn/* testDirOut/*

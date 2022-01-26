@@ -9,10 +9,16 @@
 #include <dirent.h>
 #include "Encoder.h"
 
-int main(){
-  char* DirOutName = "testDirOut";
-  char* DirName = "testDirIn";
-  int forksOrig = 3;
+int main(int argc, char *argv[]){
+  char* DirOutName = argv[2];
+  char* DirName = argv[1];
+  printf("input: %s\n", DirName);
+  int forksOrig = strtol(argv[3], NULL, 0);
+  
+  if ((forksOrig < 1) || (forksOrig > 128)) {
+    printf("number of proesses is unreasonable!\n");
+    exit(-1);
+  }
   int forks = forksOrig;
   int i = -1;
   int ID = -1;
@@ -37,17 +43,17 @@ int main(){
   if(d){
     while ((entry = readdir(d)) != NULL){
       counter++;
-      printf("upping counter");
+      //printf("upping counter");
       if(entry->d_type == DT_REG && (counter%forksOrig == i)){
         stat(entry->d_name, &s);
 	result += s.st_size;
-	printf("%s\n", entry->d_name);
+	//printf("%s\n", entry->d_name);
 	char *t;
 	t = malloc(sizeof(DirName) + sizeof('/') + sizeof(entry->d_name));
 	strcpy(t, DirName);
 	strcat(t, "/");
 	strcat(t, entry->d_name);
-	printf("here is the path: %s\n", t);
+	//printf("here is the path: %s\n", t);
 	struct stat s;
 	stat(t, &s);
 	char *m;

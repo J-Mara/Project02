@@ -42,7 +42,7 @@ char *shiftUpRead(char* text){
   for(i = 0; text[i] != '\0'; i++){
     if(isdigit(text[i])){
       j = (int)(text[i])-48;
-      printf("shift value: %d\n", j);
+      //printf("shift value: %d\n", j);
     }
     if(isalpha(text[i])){
 	text[i] += j;
